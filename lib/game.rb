@@ -1,3 +1,5 @@
+require_relative 'yaml_dump'
+
 # Class that controls the secret word and users guesses
 class Game
   ALLOWED_FALSE_GUESSES = 6
@@ -39,7 +41,7 @@ class Game
 
   def make_guess
     print 'Enter your letter: '
-    letter = gets.chomp
+    letter = gets.chomp.downcase
     guessed_letters << letter
     if secret_word.include?(letter)
       puts "Correct, '#{letter}' is in the secret word!"
@@ -54,7 +56,7 @@ class Game
     return unless @false_guesses > ALLOWED_FALSE_GUESSES
 
     @game_over = true
-    puts 'YOU LOST...'
+    puts "YOU LOST... The secret word was: #{secret_word}"
   end
 
   def play
@@ -62,9 +64,27 @@ class Game
       puts "Guessed so far: #{guessed_letters}"
       puts "You can make #{ALLOWED_FALSE_GUESSES - false_guesses} more false guesses"
       display
+      break if ask_to_save
+
       break if game_over
 
       make_guess
     end
+  end
+
+  def ask_to_save
+    print 'Do you want to save the game and quit? [y/n] '
+    wants_to_quit = gets.chomp.downcase == 'y'
+    return false unless wants_to_quit
+
+    print 'Enter a name for the saved game: '
+    filename = gets.chomp
+    SaveLoad.make_serialized(self, filename)
+    puts "Game saved as #{filename}"
+    true
+  end
+
+  def self.load(filename)
+    SaveLoad.load_serialized(filename)
   end
 end
