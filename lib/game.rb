@@ -1,4 +1,4 @@
-require_relative 'yaml_dump'
+require_relative 'serialize'
 
 # Class that controls the secret word and users guesses
 class Game
@@ -73,18 +73,18 @@ class Game
   end
 
   def ask_to_save
-    print 'Do you want to save the game and quit? [y/n] '
+    print 'Enter \'y\' to save the game and quit, any other input to continue guessing: '
     wants_to_quit = gets.chomp.downcase == 'y'
     return false unless wants_to_quit
 
     print 'Enter a name for the saved game: '
     filename = gets.chomp
-    SaveLoad.make_serialized(self, filename)
+    SaveLoad.make_yaml(self, filename)
     puts "Game saved as #{filename}"
     true
   end
 
   def self.load(filename)
-    SaveLoad.load_serialized(filename)
+    SaveLoad.load_yaml(filename)
   end
 end

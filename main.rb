@@ -1,5 +1,5 @@
 require_relative 'lib/game'
-require_relative 'lib/yaml_dump'
+require_relative 'lib/serialize'
 
 puts 'Welcome to Hangman!'
 puts '1. New Game'

@@ -1,0 +1,6 @@
+--- !ruby/object:Game
+game_over: false
+secret_word: ultra
+false_guesses: 1
+guessed_letters:
+- e

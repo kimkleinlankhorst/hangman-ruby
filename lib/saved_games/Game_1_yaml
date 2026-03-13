@@ -1,0 +1,14 @@
+--- !ruby/object:Game
+game_over: false
+secret_word: configured
+false_guesses: 1
+guessed_letters:
+- a
+- e
+- c
+- o
+- "n"
+- f
+- i
+- g
+- r
